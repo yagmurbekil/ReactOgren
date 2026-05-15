@@ -1,20 +1,21 @@
-import React from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import Content from './components/Content';
-import Footer from './components/Footer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { MainLayout } from './layouts/MainLayout';
+import { Home } from './pages/Home';
+import { TopicsLayout } from './pages/TopicsLayout';
+import { TopicContent } from './pages/TopicContent';
 
-const App: React.FC = () => {
+export default function App() {
   return (
-    <div className="min-h-screen bg-brand-darker font-sans text-gray-100 selection:bg-brand-blue/30 selection:text-white">
-      <Header />
-      <main>
-        <Hero />
-        <Content />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="topics" element={<TopicsLayout />}>
+            <Route path=":id" element={<TopicContent />} />
+          </Route>
+          <Route path="*" element={<div className="flex items-center justify-center h-screen text-2xl font-bold">Sayfa Bulunamadı</div>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
-};
-
-export default App;
+}
